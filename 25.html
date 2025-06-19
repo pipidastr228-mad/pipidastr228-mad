@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Задача 25</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    button { padding: 8px 15px; margin-top: 10px; }
+    .result { margin-top: 10px; padding: 10px; background: #f0f0f0; }
+  </style>
+</head>
+<body>
+  <h2>25. Копировать свойства, если разные</h2>
+  <p>Исходные объекты:</p>
+  <pre id="source25"></pre>
+  <button onclick="copyProperties()">Скопировать</button>
+  <div class="result" id="result25"></div>
+
+  <script>
+    const source25 = { a: 1, b: 2, c: 3 };
+    const target25 = { a: 1, b: 4, d: 5 };
+    document.getElementById('source25').textContent =`
+      source: ${JSON.stringify(source25)}\ntarget: ${JSON.stringify(target25)}`;
+
+    function copyProperties() {
+      const target = { ...target25 };
+      for (const key in source25) {
+        if (source25[key] !== target[key]) {
+          target[key] = source25[key];
+        }
+      }
+
+      document.getElementById('result25').textContent = JSON.stringify(target, null, 2);
+    }
+  </script>
+</body>
+</html>

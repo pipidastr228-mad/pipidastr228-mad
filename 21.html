@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Задача 21</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    button { padding: 8px 15px; margin-top: 10px; }
+    .result { margin-top: 10px; padding: 10px; background: #f0f0f0; }
+  </style>
+</head>
+<body>
+  <h2>21. Определить часть координатной плоскости</h2>
+  <p>Точка: <span id="point21"></span></p>
+  <button onclick="determineQuadrant()">Определить четверть</button>
+  <div class="result" id="result21"></div>
+
+  <script>
+    const point21 = { x: -5, y: 3 };
+    document.getElementById('point21').textContent = JSON.stringify(point21);
+
+    function determineQuadrant() {
+      const { x, y } = point21;
+      let result;
+      if (x > 0 && y > 0) result = 'I четверть';
+      else if (x < 0 && y > 0) result = 'II четверть';
+      else if (x < 0 && y < 0) result = 'III четверть';
+      else if (x > 0 && y < 0) result = 'IV четверть';
+      else result = 'На оси';
+
+      document.getElementById('result21').textContent = `Результат: ${result}`;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Задача 20</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        button { padding: 8px 15px; margin-top: 10px; }
+        .result { margin-top: 10px; padding: 10px; background: #f0f0f0; }
+    </style>
+</head>
+<body>
+    <h2>20. Найти наименьшее числовое свойство объекта</h2>
+    <p>Исходный объект: <span id="obj20"></span></p>
+    <button onclick="findMinNumericProperty()">Найти минимум</button>
+    <div class="result" id="result20"></div>
+
+    <script>
+        const obj20 = { a: 10, b: 5, c: 20, d: 3, e: 8, f: 7 };
+        document.getElementById('obj20').textContent = JSON.stringify(obj20);
+
+        function findMinNumericProperty() {
+            const obj = {...obj20};
+            let minValue = Infinity;
+            let minProperty = null;
+            
+            for (const key in obj) {
+                if (typeof obj[key] === 'number' && obj[key] < minValue) {
+                    minValue = obj[key];
+                    minProperty = key;
+                }
+            }
+            
+            const resultElement = document.getElementById('result20');
+            if (minProperty !== null) {
+                resultElement.textContent = `Минимальное свойство: ${minProperty} = ${minValue}`;
+            } else {
+                resultElement.textContent = 'Числовых свойств не найдено';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Задача 1 - Високосный год</title>
+</head>
+<body>
+  <h3>1. Проверка високосного года</h3>
+  <input id="year1" type="number" placeholder="Введите год" />
+  <button onclick="checkLeapYear()">Проверить</button>
+  <p id="result1"></p>
+
+  <script>
+    function checkLeapYear() {
+      const year = parseInt(document.getElementById("year1").value);
+      const isLeap = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+      document.getElementById("result1").textContent = isLeap
+        ? "Год високосный"
+        : "Год не високосный";
+    }
+  </script>
+</body>
+</html>

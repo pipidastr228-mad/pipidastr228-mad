@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Задача 16</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        button { padding: 8px 15px; margin-top: 10px; }
+        .result { margin-top: 10px; padding: 10px; background: #f0f0f0; }
+    </style>
+</head>
+<body>
+    <h2>16. Определить количество гласных и согласных букв</h2>
+    <input type="text" id="inputString" placeholder="Введите строку">
+    <button onclick="countVowelsAndConsonants()">Посчитать</button>
+    <div class="result" id="result16"></div>
+
+    <script>
+        function countVowelsAndConsonants() {
+            const str = document.getElementById('inputString').value.toLowerCase();
+            const vowels = 'аеёиоуыэюяaeiou';
+            let vowelCount = 0;
+            let consonantCount = 0;
+            
+            for (let char of str) {
+                if (/[а-яa-z]/.test(char)) {
+                    if (vowels.includes(char)) {
+                        vowelCount++;
+                    } else {
+                        consonantCount++;
+                    }
+                }
+            }
+            
+            document.getElementById('result16').textContent = 
+                `Гласных: ${vowelCount}, Согласных: ${consonantCount}`;
+        }
+    </script>
+</body>
+</html>

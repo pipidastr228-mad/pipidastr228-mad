@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Задача 7 — Ферзь</title>
+  <style>
+    body { font-family: Arial; margin: 20px;
+     }
+    button { margin-top: 10px;
+     }
+    .result { margin-top: 10px; background: #f0f0f0; padding: 10px;
+     }
+  </style>
+</head>
+<body>
+  <h2>7. Определить, бьёт ли ферзь фигуру</h2>
+  <p>Введите координаты ферзя и фигуры (по строкам и столбцам)</p>
+  <input id="qRow" placeholder="Ферзь — строка">
+  <input id="qCol" placeholder="Ферзь — столбец">
+  <input id="fRow" placeholder="Фигура — строка">
+  <input id="fCol" placeholder="Фигура — столбец">
+  <br><button onclick="checkQueen()">Проверить</button>
+  <div class="result" id="result7"></div>
+
+  <script>
+    function checkQueen() {
+      const qR = +document.getElementById("qRow").value;
+      const qC = +document.getElementById("qCol").value;
+      const fR = +document.getElementById("fRow").value;
+      const fC = +document.getElementById("fCol").value;
+
+      const result =
+        qR === fR  |qC === fC  |Math.abs(qR - fR) === Math.abs(qC - fC)
+          ? "Ферзь бьёт фигуру"
+          : "Ферзь не бьёт фигуру";
+
+      document.getElementById("result7").textContent = result;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Задача 17</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        button { padding: 8px 15px; margin-top: 10px; }
+        .result { margin-top: 10px; padding: 10px; background: #f0f0f0; }
+    </style>
+</head>
+<body>
+    <h2>17. Вывести уникальные числовые свойства объекта</h2>
+    <p>Исходный объект: <span id="obj17"></span></p>
+    <button onclick="findUniqueNumericProperties()">Найти уникальные</button>
+    <div class="result" id="result17"></div>
+
+    <script>
+        const obj17 = { a: 1, b: 2, c: 3, d: 2, e: 5, f: 1 };
+        document.getElementById('obj17').textContent = JSON.stringify(obj17);
+
+        function findUniqueNumericProperties() {
+            const obj = {...obj17};
+            const valueCounts = {};
+            const uniqueProperties = [];
+            
+            for (const key in obj) {
+                if (typeof obj[key] === 'number') {
+                    valueCounts[obj[key]] = (valueCounts[obj[key]] || 0) + 1;
+                }
+            }
+            
+            for (const key in obj) {
+                if (typeof obj[key] === 'number' && valueCounts[obj[key]] === 1) {
+                    uniqueProperties.push`(${key}: ${obj[key]})`;
+                }
+            }
+            
+            const resultElement = document.getElementById('result17');
+            if (uniqueProperties.length > 0) {
+                resultElement.textContent = `Уникальные свойства: ${uniqueProperties.join(', ')}`;
+            } else {
+                resultElement.textContent = 'Уникальных свойств не найдено';
+            }
+        }
+    </script>
+</body>
+</html>

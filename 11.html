@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Задача 11 — Объект в пары</title>
+  <style> body { font-family: Arial; margin: 20px; } .result { background: #eee; padding: 10px; margin-top: 10px; } </style>
+</head>
+<body>
+  <h2>11. Преобразование объекта в [key, value]</h2>
+  <button onclick="convertObject()">Преобразовать</button>
+  <div class="result" id="result11"></div>
+
+  <script>
+    function convertObject() {
+      const obj = { name: "Anna", age: 24, city: "Moscow" };
+      const pairs = Object.entries(obj);
+      document.getElementById("result11").textContent = JSON.stringify(pairs);
+    }
+  </script>
+</body>
+</html>

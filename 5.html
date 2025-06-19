@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Задача 5 - Проверка строки</title>
+</head>
+<body>
+  <h3>5. Строка начинается с 'a'</h3>
+  <input id="str5" type="text" placeholder="Введите строку" />
+  <button onclick="checkStringStart()">Проверить</button>
+  <p id="result5"></p>
+
+  <script>
+    function checkStringStart() {
+      const str = document.getElementById("str5").value;
+      const result = str.charAt(0) === 'a';
+      document.getElementById("result5").textContent = result;
+    }
+  </script>
+</body>
+</html>

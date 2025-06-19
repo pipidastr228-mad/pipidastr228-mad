@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Задача 26</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    button { padding: 8px 15px; margin-top: 10px; }
+    .result { margin-top: 10px; padding: 10px; background: #f0f0f0; }
+  </style>
+</head>
+<body>
+  <h2>26. Преобразовать в массив, если color = "blue"</h2>
+  <p>Объект: <span id="obj26"></span></p>
+  <button onclick="transformToArray()">Преобразовать</button>
+  <div class="result" id="result26"></div>
+
+  <script>
+    const obj26 = { color: "blue", size: "L", type: "shirt" };
+    document.getElementById('obj26').textContent = JSON.stringify(obj26);
+
+    function transformToArray() {
+      const result = obj26.color === "blue" ? Object.values(obj26) : [];
+      document.getElementById('result26').textContent = JSON.stringify(result);
+    }
+  </script>
+</body>
+</html>

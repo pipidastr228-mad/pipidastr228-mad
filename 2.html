@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Ладья</title>
+</head>
+<body>
+  <h3>2. Ладья бьёт фигуру</h3>
+  <input id="r1" type="number" placeholder="Строка ладьи" />
+  <input id="c1" type="number" placeholder="Столбец ладьи" />
+  <input id="r2" type="number" placeholder="Строка фигуры" />
+  <input id="c2" type="number" placeholder="Столбец фигуры" />
+  <button onclick="checkRook()">Проверить</button>
+  <p id="result2"></p>
+
+  <script>
+    function checkRook() {
+      const r1 = +document.getElementById("r1").value;
+      const c1 = +document.getElementById("c1").value;
+      const r2 = +document.getElementById("r2").value;
+      const c2 = +document.getElementById("c2").value;
+      const canAttack = r1 === r2 || c1 === c2;
+      document.getElementById("result2").textContent = canAttack
+        ? "Ладья бьёт фигуру"
+        : "Ладья не бьёт фигуру";
+    }
+  </script>
+</body>
+</html>

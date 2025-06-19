@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Задача 12 — Проверка свойства</title>
+  <style> body { font-family: Arial; margin: 20px; } .result { background: #eee; padding: 10px; margin-top: 10px;
+   } </style>
+</head>
+<body>
+  <h2>12. Проверка свойства объекта</h2>
+  <input id="property" placeholder="Введите свойство">
+  <button onclick="checkProp()">Проверить</button>
+  <div class="result" id="result12"></div>
+
+  <script>
+    function checkProp() {
+      const user = { name: "Alex", age: 33, country: "Russia" };
+      const prop = document.getElementById("property").value;
+      const result = prop in user ? "Свойство есть" : "Нет такого свойства";
+      document.getElementById("result12").textContent = result;
+    }
+  </script>
+</body>
+</html>

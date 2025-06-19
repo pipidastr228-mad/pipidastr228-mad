@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Задача 8 — Случайные объекты</title>
+  <style> body { font-family: Arial; margin: 20px; } .result { background: #eee; padding: 10px; margin-top: 10px;
+   } </style>
+</head>
+<body>
+  <h2>8. Массив объектов с рандомными значениями</h2>
+  <button onclick="generateObjects()">Сгенерировать</button>
+  <div class="result" id="result8"></div>
+
+  <script>
+    function generateObjects() {
+      const arr = [];
+      for (let i = 0; i < 5; i++
+      ) {
+        arr.push({
+          id: i + 1,
+          value: Math.floor(Math.random() * 100),
+          name: "Item" + (i + 1)
+        });
+      }
+      document.getElementById("result8").textContent = JSON.stringify(arr, null, 2);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Задача 6 - Автомобиль</title>
+</head>
+<body>
+  <h3>6. Случайный автомобиль</h3>
+  <button onclick="generateCar()">Сгенерировать</button>
+  <p id="result6"></p>
+
+  <script>
+    function generateCar() {
+      const brands = ["Toyota", "BMW", "Ford", "Lada"];
+      const colors = ["красный", "синий", "чёрный", "белый"];
+      const car = {
+        марка: brands[Math.floor(Math.random() * brands.length)],
+        цвет: colors[Math.floor(Math.random() * colors.length)],
+        год: 2000 + Math.floor(Math.random() * 25)
+      };
+      document.getElementById("result6").textContent =
+        `Марка: ${car.марка}, Цвет: ${car.цвет}, Год: ${car.год}`;
+    }
+  </script>
+</body>
+</html>

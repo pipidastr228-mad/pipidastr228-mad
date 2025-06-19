@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Задача 24</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    button { padding: 8px 15px; margin-top: 10px; }
+    .result { margin-top: 10px; padding: 10px; background: #f0f0f0; }
+  </style>
+</head>
+<body>
+  <h2>24. Оптимизация билетов на n поездок</h2>
+  <p>n поездок: <span id="n24">135</span></p>
+  <button onclick="optimizeTickets()">Рассчитать</button>
+  <div class="result" id="result24"></div>
+
+  <script>
+    function optimizeTickets() {
+      const n = 135;
+      const cost = [15, 125, 440];
+      let minCost = Infinity;
+      let result = {};
+
+      for (let c = 0; c <= Math.ceil(n / 60); c++) {
+        for (let b = 0; b <= Math.ceil(n / 10); b++) {
+          for (let a = 0; a <= n; a++) {
+            if (a + b * 10 + c * 60 >= n) {
+              const total = a * cost[0] + b * cost[1] + c * cost[2];
+              if (total < minCost) {
+                minCost = total;
+                result = { поездки1: a, поездки10: b, поездки60: c, стоимость: total };
+              }
+            }
+          }
+        }
+      }
+
+      document.getElementById('result24').textContent = JSON.stringify(result, null, 2);
+    }
+  </script>
+</body>
+</html>

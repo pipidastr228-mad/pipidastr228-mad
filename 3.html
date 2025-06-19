@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Задача 3 — Студенты</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px;
+         }
+        button { padding: 8px 15px; margin-top: 10px;
+         }
+        .result { margin-top: 10px; padding: 10px; background: #f0f0f0; white-space: pre-wrap;
+         }
+    </style>
+</head>
+<body>
+    <h2>3. Студенты с баллом выше 4.0</h2>
+    <button onclick="showTopStudents()">Показать студентов</button>
+    <div class="result" id="result3"></div>
+
+    <script>
+        function showTopStudents() {
+            // Массив объектов студентов
+            const students = [
+                { фамилия: "Иванов", инициалы: "А.Б.", группа: "101", балл: 4.2 },
+                { фамилия: "Петров", инициалы: "Б.Г.", группа: "102", балл: 3.8 },
+                { фамилия: "Сидоров", инициалы: "В.Д.", группа: "103", балл: 4.6 },
+                { фамилия: "Кузнецова", инициалы: "Е.И.", группа: "101", балл: 3.9 },
+                { фамилия: "Морозов", инициалы: "Г.Л.", группа: "102", балл: 4.1 }
+            ];
+
+            let resultText = "";
+            let found = false;
+
+            for (let student of students) {
+                if (student.балл > 4.0) {
+                    resultText += `Фамилия: ${student.фамилия}, Инициалы: ${student.инициалы}, Группа: ${student.группа}, Балл: ${student.балл}\n`;
+                    found = true;
+                }
+            }
+
+            document.getElementById('result3').textContent = 
+                found ? resultText : "Нет студентов со средним баллом выше 4.0.";
+        }
+    </script>
+</body>
+</html>

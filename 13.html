@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Задача 13 — Методы в объектах</title>
+  <style> body { font-family: Arial; margin: 20px; } .result { background: #eee; padding: 10px; margin-top: 10px;
+   } </style>
+</head>
+<body>
+  <h2>13. Методы объектов city1 и city2</h2>
+  <button onclick="showDescriptions()">Показать описания</button>
+  <div class="result" id="result13"></div>
+
+  <script>
+    const city1 = {
+      name: "Москва",
+      population: 12000000,
+      describe() {
+        return `Город ${this.name}, население ${this.population}`;
+      }
+    };
+
+    const city2 = {
+      name: "Санкт-Петербург",
+      population: 5000000,
+      describe() {
+        return `Город ${this.name}, население ${this.population}`;
+      }
+    };
+
+    function showDescriptions() {
+      document.getElementById("result13").textContent =
+        city1.describe() + "\n" + city2.describe();
+    }
+  </script>
+</body>
+</html>

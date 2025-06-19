@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Задача 23</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    button { padding: 8px 15px; margin-top: 10px; }
+    .result { margin-top: 10px; padding: 10px; background: #f0f0f0; }
+  </style>
+</head>
+<body>
+  <h2>23. Умножить числовые свойства на случайное число</h2>
+  <p>Объект: <span id="obj23"></span></p>
+  <button onclick="multiplyNumbers()">Умножить</button>
+  <div class="result" id="result23"></div>
+
+  <script>
+    const obj23 = { a: 3, b: 0, c: 8 };
+    document.getElementById('obj23').textContent = JSON.stringify(obj23);
+
+    function multiplyNumbers() {
+      const obj = { ...obj23 };
+      const nums = Object.values(obj).filter(v => typeof v === 'number');
+      const min = Math.min(...nums);
+      const max = Math.max(...nums);
+      const rand = Math.random() * (max - min) + min;
+
+      for (const key in obj) {
+        if (typeof obj[key] === 'number') {
+          obj[key] = +(obj[key] * rand).toFixed(2);
+        }
+      }
+
+      document.getElementById('result23').textContent =
+        `Случайное число: ${rand.toFixed(2)}\nИзменённый объект: ${JSON.stringify(obj)}`;
+    }
+  </script>
+</body>
+</html>

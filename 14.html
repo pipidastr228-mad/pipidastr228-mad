@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Задача 14</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        button { padding: 8px 15px; margin-top: 10px; }
+        .result { margin-top: 10px; padding: 10px; background: #f0f0f0; }
+    </style>
+</head>
+<body>
+    <h2>14. Удалить объект, свойство которого соответствует введённому значению</h2>
+    <p>Исходный объект: <span id="obj14"></span></p>
+    <input type="text" id="valueToDelete" placeholder="Введите значение для удаления">
+    <button onclick="deletePropertyByValue()">Удалить</button>
+    <div class="result" id="result14"></div>
+
+    <script>
+        const obj14 = { a: 1, b: 2, c: 3, d: 55, e: 'hello'};
+        document.getElementById('obj14').textContent = JSON.stringify(obj14);
+
+        function deletePropertyByValue() {
+            const value = document.getElementById('valueToDelete').value;
+            const obj = {...obj14};
+            let deleted = false;
+            
+            const numValue = isNaN(value) ? value : Number(value);
+            
+            for (const key in obj) {
+                if (obj[key] === numValue) {
+                    delete obj[key];
+                    deleted = true;
+                }
+            }
+            
+            const resultElement = document.getElementById('result14');
+            if (deleted) {
+                resultElement.textContent = `Объект после удаления: ${JSON.stringify(obj)}`;
+            } else {
+                resultElement.textContent = `Свойство со значением '${value}' не найдено.`;
+            }
+        }
+    </script>
+</body>
+</html>

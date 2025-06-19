@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Задача 15</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        button { padding: 8px 15px; margin-top: 10px; }
+        .result { margin-top: 10px; padding: 10px; background: #f0f0f0; }
+    </style>
+</head>
+<body>
+    <h2>15. Перемножить числовые свойства и сравнить с числом</h2>
+    <p>Исходный объект: <span id="obj15"></span></p>
+    <input type="number" id="numberToCompare" placeholder="Введите число для сравнения">
+    <button onclick="multiplyAndCompare()">Сравнить</button>
+    <div class="result" id="result15"></div>
+
+    <script>
+        const obj15 = { x: 5, y: 3, z: 2 };
+        document.getElementById('obj15').textContent = JSON.stringify(obj15);
+
+        function multiplyAndCompare() {
+            const userNumber = Number(document.getElementById('numberToCompare').value);
+            if (isNaN(userNumber)) {
+                document.getElementById('result15').textContent = 'Пожалуйста, введите число';
+                return;
+            }
+            
+            const obj = {...obj15};
+            let product = 1;
+            let hasNumericProperties = false;
+            
+            for (const key in obj) {
+                if (typeof obj[key] === 'number') {
+                    product *= obj[key];
+                    hasNumericProperties = true;
+                }
+            }
+            
+            const resultElement = document.getElementById('result15');
+            if (!hasNumericProperties) {
+                resultElement.textContent = 'Числовых свойств не найдено';
+                return;
+            }
+            
+            resultElement.innerHTML = `Произведение: ${product}<br>
+                                      Введенное число: ${userNumber}<br>
+                                      Результат: ${product === userNumber ? 'равны' : product > userNumber ? 'произведение больше' : 'произведение меньше'}`;
+        }
+    </script>
+</body>
+</html>

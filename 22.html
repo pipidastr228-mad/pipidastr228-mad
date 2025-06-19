@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Задача 22</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    button { padding: 8px 15px; margin-top: 10px; }
+    .result { margin-top: 10px; padding: 10px; background: #f0f0f0; }
+  </style>
+</head>
+<body>
+  <h2>22. Найти наименьшее строковое свойство</h2>
+  <p>Объект: <span id="obj22"></span></p>
+  <button onclick="findSmallestString()">Найти</button>
+  <div class="result" id="result22"></div>
+
+  <script>
+    const obj22 = { a: 'pear', b: 'grapes', c: 'banana' };
+    document.getElementById('obj22').textContent = JSON.stringify(obj22);
+
+    function findSmallestString() {
+      let min = null;
+      for (const key in obj22) {
+        if (typeof obj22[key] === 'string') {
+          if (min === null || obj22[key] < min) {
+            min = obj22[key];
+          }
+        }
+      }
+      document.getElementById('result22').textContent = `Наименьшая строка: ${min}`;
+    }
+  </script>
+</body>
+</html>

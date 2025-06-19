@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Задача 4 - Слон</title>
+</head>
+<body>
+  <h3>4. Слон бьёт фигуру</h3>
+  <input id="br1" type="number" placeholder="Строка слона" />
+  <input id="bc1" type="number" placeholder="Столбец слона" />
+  <input id="br2" type="number" placeholder="Строка фигуры" />
+  <input id="bc2" type="number" placeholder="Столбец фигуры" />
+  <button onclick="checkBishop()">Проверить</button>
+  <p id="result4"></p>
+
+  <script>
+    function checkBishop() {
+      const r1 = +document.getElementById("br1").value;
+      const c1 = +document.getElementById("bc1").value;
+      const r2 = +document.getElementById("br2").value;
+      const c2 = +document.getElementById("bc2").value;
+      const canAttack = Math.abs(r1 - r2) === Math.abs(c1 - c2);
+      document.getElementById("result4").textContent = canAttack
+        ? "Слон бьёт фигуру"
+        : "Слон не бьёт фигуру";
+    }
+  </script>
+</body>
+</html>

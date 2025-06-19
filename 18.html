@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Задача 18</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        button { padding: 8px 15px; margin-top: 10px; }
+        .result { margin-top: 10px; padding: 10px; background: #f0f0f0; }
+        input { display: block; margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <h2>18. Время жарки котлет</h2>
+    <input type="number" id="k" placeholder="Котлет на сковороде (k)" min="1">
+    <input type="number" id="m" placeholder="Минут на сторону (m)" min="1">
+    <input type="number" id="n" placeholder="Всего котлет (n)" min="1">
+    <button onclick="calculateCookingTime()">Рассчитать</button>
+    <div class="result" id="result18"></div>
+
+    <script>
+        function calculateCookingTime() {
+            const k = parseInt(document.getElementById('k').value);
+            const m = parseInt(document.getElementById('m').value);
+            const n = parseInt(document.getElementById('n').value);
+            
+            if (isNaN(k)  || isNaN(m)  || isNaN(n)  || k <= 0  || m <= 0 || n <= 0) {
+                document.getElementById('result18').textContent = 'Введите положительные числа';
+                return;
+            }
+            
+            let time;
+            if (n <= k) {
+                time = 2 * m;
+            } else {
+                time = Math.ceil(2 * n / k) * m;
+            }
+            
+            document.getElementById('result18').textContent = 
+                `Минимальное время: ${time} минут`;
+        }
+    </script>
+</body>
+</html>

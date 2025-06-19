@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Задача 19</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        button { padding: 8px 15px; margin-top: 10px; }
+        .result { margin-top: 10px; padding: 10px; background: #f0f0f0; }
+    </style>
+</head>
+<body>
+    <h2>19. Преобразовать номер дня недели в название</h2>
+    <input type="number" id="dayNumber" placeholder="Введите номер дня (1-7)" min="1" max="7">
+    <button onclick="convertDayNumberToName()">Преобразовать</button>
+    <div class="result" id="result19"></div>
+
+    <script>
+        function convertDayNumberToName() {
+            const dayNumber = parseInt(document.getElementById('dayNumber').value);
+            const days = {
+                1: 'Понедельник',
+                2: 'Вторник',
+                3: 'Среда',
+                4: 'Четверг',
+                5: 'Пятница',
+                6: 'Суббота',
+                7: 'Воскресенье'
+            };
+            
+            const resultElement = document.getElementById('result19');
+            if (dayNumber >= 1 && dayNumber <= 7) {
+                resultElement.textContent = `День недели: ${days[dayNumber]}`;
+            } else {
+                resultElement.textContent = 'Ошибка: введите число от 1 до 7';
+            }
+        }
+    </script>
+</body>
+</html>

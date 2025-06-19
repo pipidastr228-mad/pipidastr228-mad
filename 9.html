@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Задача 9 — Статус книг</title>
+  <style> body { font-family: Arial; margin: 20px; } .result { background: #eee; padding: 10px; margin-top: 10px; white-space: pre; } </style>
+</head>
+<body>
+  <h2>9. Статус книг</h2>
+  <button onclick="showStatus()">Показать</button>
+  <div class="result" id="result9"></div>
+
+  <script>
+    function showStatus() {
+      const readers = [
+        { book: "1984", author: "Оруэлл", status: "прочитано" },
+        { book: "Война и мир", author: "Толстой", status: "не начато" },
+        { book: "Гарри Поттер", author: "Роулинг", status: "читается" }
+      ];
+
+      const text = readers.map(r =>
+        `${r.book} — ${r.author} [${r.status}]`).join("\n");
+
+      document.getElementById("result9").textContent = text;
+    }
+  </script>
+</body>
+</html>
