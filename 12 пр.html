@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Космическая битва</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #000;
+            color: white;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        h1 {
+            color: #0ff;
+            text-shadow: 0 0 10px #0ff;
+        }
+        
+        #gameArea {
+            width: 600px;
+            height: 400px;
+            background-color: #111;
+            border: 2px solid #0ff;
+            margin: 20px auto;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ship {
+            width: 40px;
+            height: 40px;
+            background-color: #0f0;
+            position: absolute;
+            bottom: 10px;
+            left: 280px;
+            border-radius: 50% 50% 0 0;
+        }
+        
+        .asteroid {
+            width: 30px;
+            height: 30px;
+            background-color: #f00;
+            position: absolute;
+            border-radius: 50%;
+        }
+        
+        #score {
+            font-size: 24px;
+            margin: 10px;
+        }
+        
+        button {
+            background-color: #0ff;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        
+        button:hover {
+            background-color: #0dd;
+        }
+        
+        #instructions {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <h1>Космическая битва</h1>
+    
+    <div id="score">Очки: 0</div>
+    
+    <div id="gameArea"></div>
+    
+    <div>
+        <button id="startBtn">Начать игру</button>
+        <button id="restartBtn" style="display:none;">Начать заново</button>
+    </div>
+    
+    <div id="instructions">
+        Управление: стрелки влево/вправо или клавиши A/D (английская раскладка)
+    </div>
+
+    <script>
+        // Переменные игры
+        let gameArea = document.getElementById('gameArea');
+        let ship;
+        let asteroids = [];
+        let score = 0;
+        let gameInterval;
+        let asteroidInterval;
+        let scoreInterval;
+        let gameRunning = false;
+        
+        // Клавиши управления
+        let keys = {
+            left: false,
+            right: false
+        };
+        
+        // Элементы интерфейса
+        let scoreDisplay = document.getElementById('score');
+        let startBtn = document.getElementById('startBtn');
+        let restartBtn = document.getElementById('restartBtn');
+        
+        // Начало игры
+        function startGame() {
+            // Очистка игрового поля
+            gameArea.innerHTML = '';
+            asteroids = [];
+            score = 0;
+            scoreDisplay.textContent = 'Очки: ' + score;
+            gameRunning = true;
+            
+            // Создание корабля
+            ship = document.createElement('div');
+            ship.classList.add('ship');
+            ship.style.left = '280px';
+            gameArea.appendChild(ship);
+            
+            // Скрыть/показать кнопки
+            startBtn.style.display = 'none';
+            restartBtn.style.display = 'inline-block';
+            
+            // Запуск игровых интервалов
+            gameInterval = setInterval(updateGame, 30);
+            asteroidInterval = setInterval(createAsteroid, 800);
+            scoreInterval = setInterval(updateScore, 1000);
+        }
+        
+        // Обновление игры
+        function updateGame() {
+            moveShip();
+            moveAsteroids();
+            checkCollisions();
+        }
+        
+        // Движение корабля
+        function moveShip() {
+            if (!ship) return;
+            
+            let x = parseInt(ship.style.left);
+            
+            if (keys.left) x -= 6;
+            if (keys.right) x += 6;
+            
+            // Ограничение движения в пределах игрового поля
+            if (x < 0) x = 0;
+            if (x > gameArea.clientWidth - ship.clientWidth) x = gameArea.clientWidth - ship.clientWidth;
+            
+            ship.style.left = x + 'px';
+        }
+        
+        // Создание астероида
+        function createAsteroid() {
+            if (!gameRunning) return;
+            
+            const asteroid = document.createElement('div');
+            asteroid.classList.add('asteroid');
+            
+            // Случайная позиция сверху
+            const maxLeft = gameArea.clientWidth - 30;
+            const left = Math.floor(Math.random() * maxLeft);
+            asteroid.style.left = left + 'px';
+            asteroid.style.top = '0px';
+            
+            // Случайная скорость
+            asteroid.dataset.speed = Math.floor(Math.random() * 4) + 2;
+            
+            gameArea.appendChild(asteroid);
+            asteroids.push(asteroid);
+        }
+        
+        // Движение астероидов
+        function moveAsteroids() {
+            for (let i = 0; i < asteroids.length; i++) {
+                const asteroid = asteroids[i];
+                const top = parseInt(asteroid.style.top);
+                const speed = parseInt(asteroid.dataset.speed);
+                
+                asteroid.style.top = (top + speed) + 'px';
+                
+                // Удаление астероидов, вышедших за пределы экрана
+                if (top > gameArea.clientHeight) {
+                    asteroid.remove();
+                    asteroids.splice(i, 1);
+                    i--;
+                }
+            }
+        }
+        
+        // Проверка столкновений
+        function checkCollisions() {
+            if (!ship) return;
+            
+            const shipRect = ship.getBoundingClientRect();
+            
+            for (let i = 0; i < asteroids.length; i++) {
+                const asteroidRect = asteroids[i].getBoundingClientRect();
+                
+                // Проверка пересечения
+                if (shipRect.left < asteroidRect.right &&
+                    shipRect.right > asteroidRect.left &&
+                    shipRect.top < asteroidRect.bottom &&
+                    shipRect.bottom > asteroidRect.top) {
+                    endGame();
+                    return;
+                }
+            }
+        }
+        
+        // Обновление счета
+        function updateScore() {
+            if (!gameRunning) return;
+            
+            score++;
+            scoreDisplay.textContent = 'Очки: ' + score;
+            
+            // Увеличение сложности каждые 10 очков
+            if (score % 10 === 0) {
+                clearInterval(asteroidInterval);
+                const newInterval = Math.max(200, 800 - score * 20);
+                asteroidInterval = setInterval(createAsteroid, newInterval);
+            }
+        }
+        
+        // Конец игры
+        function endGame() {
+            gameRunning = false;
+            
+            clearInterval(gameInterval);
+            clearInterval(asteroidInterval);
+            clearInterval(scoreInterval);
+            
+            alert('Игра окончена! Ваш счет: ' + score);
+        }
+        
+        // Обработчики событий клавиатуры - ИСПРАВЛЕННЫЙ ВАРИАНТ
+        document.addEventListener('keydown', function(e) {
+            // Используем code вместо key для независимости от раскладки
+            if (e.code === 'ArrowLeft' || e.code === 'KeyA') keys.left = true;
+            if (e.code === 'ArrowRight' || e.code === 'KeyD') keys.right = true;
+        });
+        
+        document.addEventListener('keyup', function(e) {
+            if (e.code === 'ArrowLeft' || e.code === 'KeyA') keys.left = false;
+            if (e.code === 'ArrowRight' || e.code === 'KeyD') keys.right = false;
+        });
+        
+        // Обработчики кнопок
+        startBtn.addEventListener('click', startGame);
+        restartBtn.addEventListener('click', startGame);
+    </script>
+</body>
+</html>
