@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Космическая битва</title>
+    <title>Космический защитник</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,38 +11,44 @@
             background-color: #000;
             color: white;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
         
         h1 {
-            color: #0ff;
-            text-shadow: 0 0 10px #0ff;
+            color: white;
+            margin-bottom: 10px;
         }
         
         #gameArea {
             width: 600px;
             height: 400px;
-            background-color: #111;
-            border: 2px solid #0ff;
+            background-color: #000;
+            border: 2px solid white;
             margin: 20px auto;
             position: relative;
             overflow: hidden;
         }
         
         .ship {
-            width: 40px;
-            height: 40px;
-            background-color: #0f0;
+            width: 0;
+            height: 0;
             position: absolute;
             bottom: 10px;
-            left: 280px;
-            border-radius: 50% 50% 0 0;
+            left: 285px;
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            border-bottom: 40px solid white;
         }
         
         .asteroid {
-            width: 30px;
-            height: 30px;
-            background-color: #f00;
+            width: 40px;
+            height: 40px;
+            background-color: #888;
             position: absolute;
             border-radius: 50%;
         }
@@ -50,21 +56,17 @@
         #score {
             font-size: 24px;
             margin: 10px;
+            color: white;
         }
         
         button {
-            background-color: #0ff;
+            background-color: white;
             color: #000;
             border: none;
             padding: 10px 20px;
             margin: 10px;
             font-size: 16px;
             cursor: pointer;
-            border-radius: 5px;
-        }
-        
-        button:hover {
-            background-color: #0dd;
         }
         
         #instructions {
@@ -72,22 +74,28 @@
             font-size: 14px;
             color: #aaa;
         }
+        
+        .game-over {
+            color: white;
+            font-size: 32px;
+            margin-top: 50px;
+        }
     </style>
 </head>
 <body>
-    <h1>Космическая битва</h1>
+    <h1>МЕГА УЛЬТРА КРУТАЯ ИГРА: ПРОТИВОСТОЯНИЕ СЕРЫМ АСТЕРОЙДАМ</h1>
     
-    <div id="score">Очки: 0</div>
+    <div id="score">НА СКОЛЬКО ТЫ КРУТ: 0</div>
     
     <div id="gameArea"></div>
     
     <div>
-        <button id="startBtn">Начать игру</button>
-        <button id="restartBtn" style="display:none;">Начать заново</button>
+        <button id="startBtn">СТАРТ</button>
+        <button id="restartBtn" style="display:none;">ЗАНОВО</button>
     </div>
     
     <div id="instructions">
-        Управление: стрелки влево/вправо или клавиши A/D (английская раскладка)
+        Управление: ← → или A D
     </div>
 
     <script>
@@ -118,13 +126,13 @@
             gameArea.innerHTML = '';
             asteroids = [];
             score = 0;
-            scoreDisplay.textContent = 'Очки: ' + score;
+            scoreDisplay.textContent = 'НА СКОЛЬКО ТЫ КРУТ: ' + score;
             gameRunning = true;
             
-            // Создание корабля
+            // Создание корабля-треугольника
             ship = document.createElement('div');
             ship.classList.add('ship');
-            ship.style.left = '280px';
+            ship.style.left = '285px';
             gameArea.appendChild(ship);
             
             // Скрыть/показать кнопки
@@ -132,8 +140,8 @@
             restartBtn.style.display = 'inline-block';
             
             // Запуск игровых интервалов
-            gameInterval = setInterval(updateGame, 30);
-            asteroidInterval = setInterval(createAsteroid, 800);
+            gameInterval = setInterval(updateGame, 50);
+            asteroidInterval = setInterval(createAsteroid, 1000);
             scoreInterval = setInterval(updateScore, 1000);
         }
         
@@ -150,12 +158,12 @@
             
             let x = parseInt(ship.style.left);
             
-            if (keys.left) x -= 6;
-            if (keys.right) x += 6;
+            if (keys.left) x -= 5;
+            if (keys.right) x += 5;
             
-            // Ограничение движения в пределах игрового поля
+            // Ограничение движения
             if (x < 0) x = 0;
-            if (x > gameArea.clientWidth - ship.clientWidth) x = gameArea.clientWidth - ship.clientWidth;
+            if (x > gameArea.clientWidth - 50) x = gameArea.clientWidth - 50;
             
             ship.style.left = x + 'px';
         }
@@ -168,13 +176,12 @@
             asteroid.classList.add('asteroid');
             
             // Случайная позиция сверху
-            const maxLeft = gameArea.clientWidth - 30;
-            const left = Math.floor(Math.random() * maxLeft);
+            const left = Math.floor(Math.random() * (gameArea.clientWidth - 40));
             asteroid.style.left = left + 'px';
             asteroid.style.top = '0px';
             
             // Случайная скорость
-            asteroid.dataset.speed = Math.floor(Math.random() * 4) + 2;
+            asteroid.dataset.speed = Math.floor(Math.random() * 3) + 2;
             
             gameArea.appendChild(asteroid);
             asteroids.push(asteroid);
@@ -189,7 +196,7 @@
                 
                 asteroid.style.top = (top + speed) + 'px';
                 
-                // Удаление астероидов, вышедших за пределы экрана
+                // Удаление астероидов за экраном
                 if (top > gameArea.clientHeight) {
                     asteroid.remove();
                     asteroids.splice(i, 1);
@@ -207,7 +214,7 @@
             for (let i = 0; i < asteroids.length; i++) {
                 const asteroidRect = asteroids[i].getBoundingClientRect();
                 
-                // Проверка пересечения
+                // Простая проверка пересечения
                 if (shipRect.left < asteroidRect.right &&
                     shipRect.right > asteroidRect.left &&
                     shipRect.top < asteroidRect.bottom &&
@@ -223,14 +230,7 @@
             if (!gameRunning) return;
             
             score++;
-            scoreDisplay.textContent = 'Очки: ' + score;
-            
-            // Увеличение сложности каждые 10 очков
-            if (score % 10 === 0) {
-                clearInterval(asteroidInterval);
-                const newInterval = Math.max(200, 800 - score * 20);
-                asteroidInterval = setInterval(createAsteroid, newInterval);
-            }
+            scoreDisplay.textContent = 'НА СКОЛЬКО ТЫ КРУТ: ' + score;
         }
         
         // Конец игры
@@ -241,12 +241,15 @@
             clearInterval(asteroidInterval);
             clearInterval(scoreInterval);
             
-            alert('Игра окончена! Ваш счет: ' + score);
+            // Простое сообщение
+            const gameOver = document.createElement('div');
+            gameOver.classList.add('game-over');
+            gameOver.textContent = 'ИГРА ОКОНЧЕНА! НА СКОЛЬКО ТЫ КРУТ: ' + score;
+            gameArea.appendChild(gameOver);
         }
         
-        // Обработчики событий клавиатуры - ИСПРАВЛЕННЫЙ ВАРИАНТ
+        // Обработчики клавиатуры
         document.addEventListener('keydown', function(e) {
-            // Используем code вместо key для независимости от раскладки
             if (e.code === 'ArrowLeft' || e.code === 'KeyA') keys.left = true;
             if (e.code === 'ArrowRight' || e.code === 'KeyD') keys.right = true;
         });
@@ -261,4 +264,4 @@
         restartBtn.addEventListener('click', startGame);
     </script>
 </body>
-</html>
+</html> 
